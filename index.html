@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <!-- Makes the website responsive on phones and tablets -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>My Portfolio | Home</title>
+
+  <!-- Main CSS file -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ============================= -->
+  <!-- Header and navigation section -->
+  <!-- ============================= -->
+  <header>
+    <nav class="navbar">
+
+      <!-- Portfolio logo -->
+      <h2 class="logo">
+        <span>WJ</span>
+      </h2>
+
+      <!-- Mobile menu button -->
+      <button
+        class="menu-btn"
+        onclick="toggleMenu()"
+        aria-label="Open navigation menu"
+      >
+        ☰
+      </button>
+
+      <!-- Navigation links -->
+      <ul id="navLinks">
+        <li>
+          <a href="index.html" class="active">Home</a>
+        </li>
+
+        <li>
+          <a href="about.html">About</a>
+        </li>
+
+        <li>
+          <a href="work.html">Work</a>
+        </li>
+
+        <li>
+          <a href="contact.html">Contact</a>
+        </li>
+      </ul>
+
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ================= -->
+    <!-- Main hero section -->
+    <!-- ================= -->
+    <section class="hero">
+
+      <div class="hero-content">
+
+        <!-- Left side of the hero section -->
+        <div class="hero-text">
+
+          <p class="hero-small-title">ICT & Software Engineering Student</p>
+
+          <h1>
+            Hi! I am
+            <span>Jilmo Jong A Tai</span>
+          </h1>
+
+          <p class="hero-description">
+            I am a student at UNASAT studying ICT and Software Engineering.
+            I enjoy programming, creating websites, developing custom solutions,
+            and learning new technologies.
+          </p>
+
+          <!-- Hero buttons -->
+          <div class="hero-buttons">
+            <a href="contact.html" class="btn hero-main-btn">
+              Contact Me
+            </a>
+
+            <a href="work.html" class="btn hero-second-btn">
+              View My Work
+            </a>
+          </div>
+
+          <!-- Short list of skills -->
+          <div class="hero-skills">
+            <span>HTML</span>
+            <span>CSS</span>
+            <span>JavaScript</span>
+            <span>C++</span>
+            <span>Odoo</span>
+          </div>
+
+        </div>
+
+        <!-- Right side of the hero section -->
+        <div class="hero-image-area">
+
+          <!-- Decorative orange circles -->
+          <div class="decoration-circle circle-one"></div>
+          <div class="decoration-circle circle-two"></div>
+          <div class="decoration-circle circle-three"></div>
+
+          <!-- Main profile image -->
+          <div class="hero-image-box">
+            <img
+              src="images/profile.jpg"
+              alt="Profile picture of Jilmo Jong A Tai"
+            >
+          </div>
+
+          <!-- Small information card -->
+          <div class="hero-info-card">
+            <span class="status-dot"></span>
+
+            <div>
+              <strong>Available to learn</strong>
+              <p>Building new skills every day</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Small scroll message -->
+      <a href="#home-content" class="scroll-down">
+        <span>Scroll down</span>
+        <span class="scroll-arrow">↓</span>
+      </a>
+
+    </section>
+
+    <!-- ============================== -->
+    <!-- Main homepage content section -->
+    <!-- ============================== -->
+    <div id="home-content">
+
+      <!-- ==================== -->
+      <!-- Current role section -->
+      <!-- ==================== -->
+      <section class="section home-introduction">
+
+        <div class="section-heading">
+          <p class="section-small-title">About My Journey</p>
+          <h2>Current Role</h2>
+        </div>
+
+        <div class="current-role-card">
+
+          <!-- Profile image inside the Current Role card -->
+          <div class="role-image">
+            <img
+              src="images/coding.jpg"
+              alt="Profile picture of Jilmo Jong A Tai"
+            >
+          </div>
+
+          <div class="role-content">
+            <h3>Student and Developer</h3>
+
+            <p>
+              I am currently a student at UNASAT, where I am studying ICT
+              and Software Engineering. I am also employed full time at
+              Agile Solutioneers N.V.
+            </p>
+
+            <p>
+              Besides studying and working, I am starting my own lawnmowing
+              business. You can find more information about my background
+              and interests on the About page.
+            </p>
+
+            <a href="about.html" class="small-link">
+              Read more about me →
+            </a>
+          </div>
+
+        </div>
+
+      </section>
+
+<!-- ======================= -->
+<!-- Recent projects section -->
+<!-- ======================= -->
+<section class="section">
+
+  <div class="section-heading project-heading">
+
+    <div>
+      <p class="section-small-title">Things I Have Built</p>
+      <h2>Recent Projects</h2>
+    </div>
+
+    <a href="work.html" class="view-all-link">
+      View all projects →
+    </a>
+
+  </div>
+
+  <!-- Holds both recent projects -->
+  <div class="home-project-list">
+
+    <!-- ===================================== -->
+    <!-- First project: text left, image right -->
+    <!-- ===================================== -->
+    <article class="home-project-row">
+
+      <!-- First project information -->
+      <div class="project-content">
+
+        <div class="project-top">
+          <span class="project-number">01</span>
+          <span class="project-type">Robot Project</span>
+        </div>
+
+        <h3>Grasi</h3>
+
+        <p>
+          While I was a student at Anton de Kom University of Suriname,
+          I worked with a group on a smart grass cutting robot that could move,
+          turn and cut grass automatically. The robot was designed to be efficient and
+          save time and effort for users. It was a great learning experience for me.
+        </p>
+
+        <p>
+          My responsibility was programming the navigation system,
+          allowing the robot to determine and communicate its live
+          location.
+        </p>
+
+        <div class="project-tags">
+          <span>Programming</span>
+          <span>Navigation</span>
+          <span>Teamwork</span>
+        </div>
+
+      </div>
+
+      <!-- First project image -->
+      <div class="project-image">
+        <img
+          src="images/grasi.jpg"
+          alt="The Delivery Bot Hackomation project team"
+        >
+      </div>
+
+    </article>
+
+    <!-- ====================================== -->
+    <!-- Second project: image left, text right -->
+    <!-- ====================================== -->
+    <article class="home-project-row">
+
+      <!-- Second project image -->
+      <div class="project-image second-project-image">
+        <img
+          src="images/microjobs.jpg"
+          alt="The MicroJobs project team"
+        >
+      </div>
+
+      <!-- Second project information -->
+      <div class="project-content">
+
+        <div class="project-top">
+          <span class="project-number">02</span>
+          <span class="project-type">Website Project</span>
+        </div>
+
+        <h3>MicroJobs.sr</h3>
+
+        <p>
+          MicroJobs.sr was a group project that I worked on with other
+          students at UNASAT. The website was designed for people
+          searching for jobs and people offering jobs.
+        </p>
+
+        <p>
+          My main responsibility in this project was creating and
+          improving the front-end part of the website.
+        </p>
+
+        <div class="project-tags">
+          <span>HTML</span>
+          <span>CSS</span>
+          <span>Front-end</span>
+        </div>
+
+      </div>
+
+    </article>
+
+  </div>
+
+</section>
+
+      <!-- ================= -->
+      <!-- My skills section -->
+      <!-- ================= -->
+      <section class="skills-section">
+
+        <div class="section skills-section-content">
+
+          <div class="skills-text">
+            <p class="section-small-title light-title">What I Work With</p>
+            <h2>My Skills</h2>
+
+            <p>
+              I am continuously improving my programming and development
+              skills by working on school assignments, personal projects,
+              and real business solutions.
+            </p>
+          </div>
+
+          <div class="skills-list">
+            <span>HTML</span>
+            <span>CSS</span>
+            <span>JavaScript</span>
+            <span>C++</span>
+            <span>Odoo Development</span>
+            <span>Vibe Coding</span>
+          </div>
+
+        </div>
+
+      </section>
+
+    </div>
+
+  </main>
+
+  <!-- ============== -->
+  <!-- Footer section -->
+  <!-- ============== -->
+  <footer>
+    <p>&copy; 2026 Jilmo Jong A Tai. All rights reserved.</p>
+  </footer>
+
+  <!-- Main JavaScript file -->
+  <script src="js/script.js"></script>
+
+</body>
+</html>

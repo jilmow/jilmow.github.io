@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <!-- Makes the website responsive on phones and tablets -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>My Portfolio | Work</title>
+
+  <!-- Main CSS file -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ============================= -->
+  <!-- Header and navigation section -->
+  <!-- ============================= -->
+  <header>
+    <nav class="navbar">
+
+      <!-- Portfolio logo -->
+      <h2 class="logo">
+        <span>WJ</span>
+      </h2>
+
+      <!-- Mobile menu button -->
+      <button
+        class="menu-btn"
+        onclick="toggleMenu()"
+        aria-label="Open navigation menu"
+      >
+        ☰
+      </button>
+
+      <!-- Navigation links -->
+      <ul id="navLinks">
+        <li>
+          <a href="index.html">Home</a>
+        </li>
+
+        <li>
+          <a href="about.html">About</a>
+        </li>
+
+        <li>
+          <a href="work.html" class="active">Work</a>
+        </li>
+
+        <li>
+          <a href="contact.html">Contact</a>
+        </li>
+      </ul>
+
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ================= -->
+    <!-- Work page heading -->
+    <!-- ================= -->
+    <section class="page-title">
+      <h1>My Work</h1>
+
+      <p>
+        A selection of projects I completed while learning programming
+        and software development.
+      </p>
+    </section>
+
+    <!-- ========================= -->
+<!-- Featured projects section -->
+<!-- ========================= -->
+<section class="section">
+
+  <div class="section-heading">
+    <p class="section-small-title">Featured Work</p>
+    <h2>Recent Projects</h2>
+  </div>
+
+  <div class="grid">
+
+    <!-- ================= -->
+    <!-- MicroJobs project -->
+    <!-- ================= -->
+    <article class="card work-project-card">
+
+      <!-- MicroJobs project information -->
+      <div class="work-project-content">
+        <h3>MicroJobs.sr</h3>
+
+        <p>
+          MicroJobs.sr was a group project that I worked on with other
+          students at UNASAT.
+        </p>
+
+        <p>
+          The website was created for two types of users: people searching
+          for jobs and people or businesses offering jobs.
+        </p>
+
+        <p>
+          <strong>My contribution:</strong>
+          Front-end development
+        </p>
+
+        <p>
+          <strong>Technologies used:</strong>
+          HTML, CSS and JavaScript
+        </p>
+      </div>
+
+      <!-- MicroJobs project image -->
+      <div class="work-project-image">
+        <img
+          src="images/microjobs.jpg"
+          alt="The MicroJobs project"
+        >
+      </div>
+
+    </article>
+
+    <!-- ============= -->
+    <!-- GRASI project -->
+    <!-- ============= -->
+    <article class="card work-project-card">
+
+      <!-- GRASI project information -->
+      <div class="work-project-content">
+        <h3>GRASI</h3>
+
+        <p>
+          GRASI was also a group project that I worked on with other
+          students at UNASAT.
+        </p>
+
+        <p>
+          The goal was to make a self-working smart grass cutter. With
+          sensors and a camera, the grass cutter can detect obstacles
+          and cut the grass in a specific area.
+        </p>
+
+        <p>
+          <strong>My contribution:</strong>
+          Programming the sensors and camera to detect obstacles and
+          cut the grass
+        </p>
+
+        <p>
+          <strong>Technologies used:</strong>
+          Arduino, C++ and Python
+        </p>
+      </div>
+
+      <!-- GRASI project image -->
+      <div class="work-project-image">
+        <img
+          src="images/grasi.jpg"
+          alt="The GRASI smart grass cutter project"
+        >
+      </div>
+
+    </article>
+
+    <!-- ==================== -->
+    <!-- Delivery Bot project -->
+    <!-- ==================== -->
+    <article class="card work-project-card">
+
+      <!-- Delivery Bot project information -->
+      <div class="work-project-content">
+        <h3>Delivery Bot (Hackomation)</h3>
+
+        <p>
+          This was a group project that I worked on while studying at
+          Anton de Kom University of Suriname.
+        </p>
+
+        <p>
+          Our goal was to create a robot that could deliver packages
+          from one location to another. My responsibility was creating
+          the code for the navigation system.
+        </p>
+
+        <p>
+          <strong>My contribution:</strong>
+          Navigation and live location programming
+        </p>
+
+        <p>
+          <strong>Project type:</strong>
+          Group project
+        </p>
+      </div>
+
+      <!-- Delivery Bot project image -->
+      <div class="work-project-image">
+        <img
+          src="images/deliver.jpg"
+          alt="The Delivery Bot project team"
+        >
+      </div>
+
+    </article>
+
+  </div>
+
+</section>
+
+<!-- ============================== -->
+<!-- Project media carousel section -->
+<!-- ============================== -->
+<section class="section project-gallery-section">
+
+  <div class="section-heading">
+    <p class="section-small-title">Project Gallery</p>
+    <h2>Project Images</h2>
+
+    <p>
+      Use the arrows or swipe left and right to view more project images.
+    </p>
+  </div>
+
+  <!-- Complete carousel -->
+  <div
+    class="media-carousel"
+    id="projectCarousel"
+    tabindex="0"
+    aria-label="Project image gallery"
+  >
+
+    <!-- Visible carousel window -->
+    <div class="carousel-viewport">
+
+      <!-- Holds all carousel slides -->
+      <div class="carousel-track">
+
+        <!-- MicroJobs slide -->
+        <figure class="carousel-slide">
+          <img
+            src="images/microjobs.jpg"
+            alt="The MicroJobs project"
+          >
+
+          <figcaption>
+            <strong>MicroJobs.sr</strong>
+            <span>Front-end website project</span>
+          </figcaption>
+        </figure>
+
+        <figure class="carousel-slide">
+          <img
+            src="images/employee.jpg"
+            alt="The MicroJobs project"
+          >
+
+          <figcaption>
+            <strong>MicroJobs.sr</strong>
+            <span>Front-end website project</span>
+          </figcaption>
+        </figure>
+
+        <figure class="carousel-slide">
+          <img
+            src="images/employer.jpg"
+            alt="The MicroJobs project"
+          >
+
+          <figcaption>
+            <strong>MicroJobs.sr</strong>
+            <span>Front-end website project</span>
+          </figcaption>
+        </figure>
+
+        <!-- GRASI slide -->
+        <figure class="carousel-slide">
+          <img
+            src="images/grasi.jpg"
+            alt="The GRASI smart grass cutter project"
+          >
+
+          <figcaption>
+            <strong>GRASI</strong>
+            <span>Smart grass cutter project</span>
+          </figcaption>
+        </figure>
+
+                <!-- GRASI blades video slide -->
+        <figure class="carousel-slide video-slide">
+          <video
+            controls
+            playsinline
+            preload="metadata"
+          >
+            <source src="videos/blades.mp4" type="video/mp4">
+
+            Your browser does not support this video.
+          </video>
+
+          <figcaption>
+            <strong>GRASI Blades</strong>
+            <span>Testing the grass-cutting blades</span>
+          </figcaption>
+        </figure>
+
+        <!-- GRASI wheels video slide -->
+        <figure class="carousel-slide video-slide">
+          <video
+            controls
+            playsinline
+            preload="metadata"
+          >
+            <source src="videos/wheels.mp4" type="video/mp4">
+
+            Your browser does not support this video.
+          </video>
+
+          <figcaption>
+            <strong>GRASI Wheels</strong>
+            <span>Testing the movement of the wheels</span>
+          </figcaption>
+        </figure>
+
+        <!-- Delivery Bot slide -->
+        <figure class="carousel-slide">
+          <img
+            src="images/deliver.jpg"
+            alt="The Delivery Bot project team"
+          >
+
+          <figcaption>
+            <strong>Delivery Bot</strong>
+            <span>Hackomation robot project</span>
+          </figcaption>
+        </figure>
+
+                <!-- Delivery Bot video slide -->
+        <figure class="carousel-slide video-slide">
+          <video
+            controls
+            playsinline
+            preload="metadata"
+          >
+            <source src="videos/delivery.mp4" type="video/mp4">
+
+            Your browser does not support this video.
+          </video>
+
+          <figcaption>
+            <strong>Delivery Bot Test</strong>
+            <span>Testing the movement of the delivery bot</span>
+          </figcaption>
+        </figure>
+
+      </div>
+
+      <!-- Previous slide button -->
+      <button
+        type="button"
+        class="carousel-button carousel-previous"
+        aria-label="Show previous image"
+      >
+        &#10094;
+      </button>
+
+      <!-- Next slide button -->
+      <button
+        type="button"
+        class="carousel-button carousel-next"
+        aria-label="Show next image"
+      >
+        &#10095;
+      </button>
+
+    </div>
+
+    <!-- Carousel navigation dots -->
+    <div class="carousel-dots" aria-label="Choose an image or video">
+
+      <button
+        type="button"
+        class="carousel-dot active"
+        aria-label="Show MicroJobs image"
+      ></button>
+
+      <button
+        type="button"
+        class="carousel-dot active"
+        aria-label="Show MicroJobs Employee image"
+      ></button>
+
+      <button
+        type="button"
+        class="carousel-dot active"
+        aria-label="Show MicroJobs Employer image"
+      ></button>
+
+      <button
+        type="button"
+        class="carousel-dot"
+        aria-label="Show GRASI image"
+      ></button>
+
+      <button
+        type="button"
+        class="carousel-dot"
+        aria-label="Show GRASI blades video"
+      ></button>
+
+      <button
+        type="button"
+        class="carousel-dot"
+        aria-label="Show GRASI wheels video"
+      ></button>
+
+      <button
+        type="button"
+        class="carousel-dot"
+        aria-label="Show Delivery Bot image"
+      ></button>
+
+      <button
+        type="button"
+        class="carousel-dot"
+        aria-label="Show Delivery Bot video"
+      ></button>
+
+    </div>
+
+  </div>
+
+</section>
+
+    <!-- =========================== -->
+    <!-- Technologies used section -->
+    <!-- =========================== -->
+    <section class="section">
+
+      <div class="section-heading">
+        <p class="section-small-title">Tools and Technologies</p>
+        <h2>What I Use</h2>
+      </div>
+
+      <div class="skills">
+        <span>HTML</span>
+        <span>CSS</span>
+        <span>JavaScript</span>
+        <span>TypeScript</span>
+        <span>C++</span>
+        <span>Arduino</span>
+        <span>Web Development</span>
+        <span>Software Development</span>
+        <span>Python</span>
+
+    </section>
+
+  </main>
+
+  <!-- ============== -->
+  <!-- Footer section -->
+  <!-- ============== -->
+  <footer>
+    <p>&copy; 2026 Jilmo Jong A Tai. All rights reserved.</p>
+  </footer>
+
+  <!-- Main JavaScript file -->
+  <script src="js/script.js"></script>
+
+</body>
+</html>
