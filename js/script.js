@@ -203,27 +203,31 @@ function startWimJeffAnimation() {
 // ==============================================
 
 /*
-  Opens the hidden input after a double-click
-  on a computer.
+  Stores the last time a touchscreen was used.
 
-  Phones and tablets use the separate double-tap
-  code further below.
+  This prevents a phone from activating both the
+  phone double-tap code and computer double-click code.
+*/
+let lastTouchInteractionTime = 0;
+
+/*
+  Opens the hidden input after a double-click
+  with a mouse on a computer.
 */
 document.addEventListener("dblclick", function (event) {
 
   /*
-    Prevents the computer double-click handler
-    from also running on a touchscreen.
+    Ignores the double-click if a touchscreen was
+    used during the previous 800 milliseconds.
   */
-  const isTouchscreen = window.matchMedia(
-    "(pointer: coarse)"
-  ).matches;
+  const recentlyUsedTouchscreen =
+    Date.now() - lastTouchInteractionTime < 800;
 
-  if (isTouchscreen) {
+  if (recentlyUsedTouchscreen) {
     return;
   }
 
-  // Ignores links, buttons, the carousel and other controls
+  // Ignores links, buttons and other interactive elements
   if (isInteractiveElement(event.target)) {
     return;
   }
@@ -237,48 +241,58 @@ document.addEventListener("dblclick", function (event) {
 // ==============================================
 
 /*
-  These variables store information about the
-  current finger gesture.
+  Information about the finger that is currently
+  touching the screen.
 */
-let phoneTouchStartX = 0;
-let phoneTouchStartY = 0;
-let phoneTouchStartTime = 0;
-let phoneTouchMoved = false;
+let activeTouchPointerId = null;
+let touchStartX = 0;
+let touchStartY = 0;
+let touchStartScrollX = 0;
+let touchStartScrollY = 0;
+let touchStartTime = 0;
+let touchMoved = false;
+let pageScrolledDuringTouch = false;
 
 /*
-  These variables store information about
-  the previous completed tap.
+  Information about the previous valid tap.
 */
-let previousTapTime = 0;
-let previousTapX = 0;
-let previousTapY = 0;
+let previousValidTapTime = 0;
+let previousValidTapX = 0;
+let previousValidTapY = 0;
+let previousValidTapTarget = null;
 
 /*
-  Maximum values used to decide whether the
-  gesture was a tap or a scroll.
+  Strict limits used to distinguish a tap
+  from scrolling or swiping.
 */
-const maximumTapMovement = 15;
-const maximumTapDuration = 350;
-const maximumDoubleTapDelay = 450;
-const maximumDistanceBetweenTaps = 50;
+const maximumFingerMovement = 8;
+const maximumTapLength = 280;
+const maximumTimeBetweenTaps = 400;
+const maximumDistanceBetweenTaps = 12;
 
 /*
-  Saves the starting position and time when
-  the user first touches the screen.
+  Resets the saved first tap.
+
+  This prevents an old tap from accidentally
+  being combined with a later tap.
 */
-document.addEventListener(
-  "touchstart",
-  function (event) {
-    const touchLocation = event.changedTouches[0];
+function resetPreviousValidTap() {
+  previousValidTapTime = 0;
+  previousValidTapX = 0;
+  previousValidTapY = 0;
+  previousValidTapTarget = null;
+}
 
-    if (!touchLocation) {
-      return;
-    }
-
-    phoneTouchStartX = touchLocation.clientX;
-    phoneTouchStartY = touchLocation.clientY;
-    phoneTouchStartTime = Date.now();
-    phoneTouchMoved = false;
+/*
+  A scroll event immediately cancels the current
+  gesture and any previously saved first tap.
+*/
+window.addEventListener(
+  "scroll",
+  function () {
+    pageScrolledDuringTouch = true;
+    touchMoved = true;
+    resetPreviousValidTap();
   },
   {
     passive: true
@@ -286,108 +300,189 @@ document.addEventListener(
 );
 
 /*
-  Detects whether the finger moved far enough
-  for the gesture to be considered scrolling.
+  Saves the exact position where the finger
+  first touches the screen.
 */
 document.addEventListener(
-  "touchmove",
+  "pointerdown",
   function (event) {
-    const touchLocation = event.changedTouches[0];
 
-    if (!touchLocation) {
+    // This section is only for fingers on touchscreens
+    if (event.pointerType !== "touch") {
       return;
     }
 
-    const horizontalMovement = Math.abs(
-      touchLocation.clientX - phoneTouchStartX
-    );
-
-    const verticalMovement = Math.abs(
-      touchLocation.clientY - phoneTouchStartY
-    );
+    lastTouchInteractionTime = Date.now();
 
     /*
-      If the finger moves more than 15 pixels,
-      the gesture is treated as scrolling or swiping.
-    */
-    if (
-      horizontalMovement > maximumTapMovement ||
-      verticalMovement > maximumTapMovement
-    ) {
-      phoneTouchMoved = true;
-    }
-  },
-  {
-    passive: true
-  }
-);
-
-/*
-  Checks whether two genuine taps happened
-  close together without scrolling.
-*/
-document.addEventListener(
-  "touchend",
-  function (event) {
-
-    /*
-      Prevents the hidden input from opening when
-      tapping links, buttons, videos or the carousel.
+      Ignores links, buttons, videos, carousel controls
+      and other interactive elements.
     */
     if (isInteractiveElement(event.target)) {
-      previousTapTime = 0;
+      activeTouchPointerId = null;
+      resetPreviousValidTap();
       return;
     }
 
-    const touchLocation = event.changedTouches[0];
+    activeTouchPointerId = event.pointerId;
+    touchStartX = event.clientX;
+    touchStartY = event.clientY;
+    touchStartScrollX = window.scrollX;
+    touchStartScrollY = window.scrollY;
+    touchStartTime = Date.now();
+    touchMoved = false;
+    pageScrolledDuringTouch = false;
+  },
+  {
+    passive: true
+  }
+);
 
-    if (!touchLocation) {
-      previousTapTime = 0;
+/*
+  Detects even small finger movement.
+
+  If the finger moves more than 8 pixels,
+  the gesture is treated as scrolling or swiping.
+*/
+document.addEventListener(
+  "pointermove",
+  function (event) {
+
+    if (
+      event.pointerType !== "touch" ||
+      event.pointerId !== activeTouchPointerId
+    ) {
       return;
     }
 
-    const currentTime = Date.now();
+    const horizontalMovement =
+      event.clientX - touchStartX;
 
-    // Calculates how long the finger was on the screen
-    const tapDuration =
-      currentTime - phoneTouchStartTime;
+    const verticalMovement =
+      event.clientY - touchStartY;
 
-    // Calculates the final movement of the finger
-    const horizontalMovement = Math.abs(
-      touchLocation.clientX - phoneTouchStartX
+    const totalMovement = Math.sqrt(
+      horizontalMovement * horizontalMovement +
+      verticalMovement * verticalMovement
     );
 
-    const verticalMovement = Math.abs(
-      touchLocation.clientY - phoneTouchStartY
+    if (totalMovement > maximumFingerMovement) {
+      touchMoved = true;
+      resetPreviousValidTap();
+    }
+  },
+  {
+    passive: true
+  }
+);
+
+/*
+  A cancelled touch can never be used as a tap.
+*/
+document.addEventListener(
+  "pointercancel",
+  function (event) {
+
+    if (
+      event.pointerType !== "touch" ||
+      event.pointerId !== activeTouchPointerId
+    ) {
+      return;
+    }
+
+    activeTouchPointerId = null;
+    touchMoved = true;
+    resetPreviousValidTap();
+  },
+  {
+    passive: true
+  }
+);
+
+/*
+  Checks whether the completed gesture was a
+  real tap and whether it matches the first tap.
+*/
+document.addEventListener(
+  "pointerup",
+  function (event) {
+
+    if (
+      event.pointerType !== "touch" ||
+      event.pointerId !== activeTouchPointerId
+    ) {
+      return;
+    }
+
+    lastTouchInteractionTime = Date.now();
+
+    // Saves the target before resetting the active pointer
+    const currentTapTarget = event.target;
+
+    activeTouchPointerId = null;
+
+    // Calculates how long the finger touched the screen
+    const tapLength =
+      Date.now() - touchStartTime;
+
+    // Calculates the total movement of the finger
+    const horizontalMovement =
+      event.clientX - touchStartX;
+
+    const verticalMovement =
+      event.clientY - touchStartY;
+
+    const totalMovement = Math.sqrt(
+      horizontalMovement * horizontalMovement +
+      verticalMovement * verticalMovement
     );
 
     /*
-      Ignores the gesture if the user scrolled,
-      swiped or held their finger down too long.
+      Checks whether the page position changed
+      while the finger was touching the screen.
     */
-    const wasScrolling =
-      phoneTouchMoved ||
-      horizontalMovement > maximumTapMovement ||
-      verticalMovement > maximumTapMovement;
+    const pagePositionChanged =
+      window.scrollX !== touchStartScrollX ||
+      window.scrollY !== touchStartScrollY;
 
-    const wasLongPress =
-      tapDuration > maximumTapDuration;
+    /*
+      This gesture is rejected if the user:
 
-    if (wasScrolling || wasLongPress) {
-      previousTapTime = 0;
+      - Moved their finger
+      - Scrolled the page
+      - Swiped
+      - Held their finger down too long
+    */
+    const isInvalidTap =
+      touchMoved ||
+      pageScrolledDuringTouch ||
+      pagePositionChanged ||
+      totalMovement > maximumFingerMovement ||
+      tapLength > maximumTapLength;
+
+    if (isInvalidTap) {
+      resetPreviousValidTap();
       return;
     }
+
+    // Ignores interactive page elements
+    if (isInteractiveElement(currentTapTarget)) {
+      resetPreviousValidTap();
+      return;
+    }
+
+    const currentTapTime = Date.now();
 
     // Calculates the time between both taps
     const timeBetweenTaps =
-      currentTime - previousTapTime;
+      currentTapTime - previousValidTapTime;
 
-    // Calculates the distance between both taps
+    // Calculates the exact distance between both taps
     const horizontalTapDistance =
-      touchLocation.clientX - previousTapX;
+      event.clientX - previousValidTapX;
 
     const verticalTapDistance =
-      touchLocation.clientY - previousTapY;
+      event.clientY - previousValidTapY;
 
     const distanceBetweenTaps = Math.sqrt(
       horizontalTapDistance * horizontalTapDistance +
@@ -395,41 +490,51 @@ document.addEventListener(
     );
 
     /*
-      The hidden input opens only when:
-
-      1. This is the second tap.
-      2. Both taps happened within 450 milliseconds.
-      3. Both taps happened close to the same location.
+      Requires both taps to land on the exact same
+      HTML element as an additional safety check.
     */
-    const isDoubleTap =
-      previousTapTime !== 0 &&
-      timeBetweenTaps <= maximumDoubleTapDelay &&
-      distanceBetweenTaps <= maximumDistanceBetweenTaps;
+    const tappedSameElement =
+      currentTapTarget === previousValidTapTarget;
 
-    if (isDoubleTap) {
+    /*
+      Opens the input only when:
+
+      1. A first valid tap exists.
+      2. The second tap happened quickly.
+      3. Both taps are within 12 pixels.
+      4. Both taps landed on the same element.
+    */
+    const isValidDoubleTap =
+      previousValidTapTime !== 0 &&
+      timeBetweenTaps <= maximumTimeBetweenTaps &&
+      distanceBetweenTaps <= maximumDistanceBetweenTaps &&
+      tappedSameElement;
+
+    if (isValidDoubleTap) {
+      event.preventDefault();
+
       showSecretInput(
-        touchLocation.clientX,
-        touchLocation.clientY
+        event.clientX,
+        event.clientY
       );
 
-      /*
-        Resets the tap information so a third tap
-        does not immediately open another input.
-      */
-      previousTapTime = 0;
+      resetPreviousValidTap();
       return;
     }
 
     /*
-      This was the first tap, so its information
-      is saved while waiting for the second tap.
+      This was one valid tap.
+
+      It is saved while the code waits for a second
+      tap at almost exactly the same position.
     */
-    previousTapTime = currentTime;
-    previousTapX = touchLocation.clientX;
-    previousTapY = touchLocation.clientY;
+    previousValidTapTime = currentTapTime;
+    previousValidTapX = event.clientX;
+    previousValidTapY = event.clientY;
+    previousValidTapTarget = currentTapTarget;
   },
   {
-    passive: true
+    passive: false
   }
 );
 
