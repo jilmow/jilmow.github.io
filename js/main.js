@@ -1,49 +1,49 @@
 // ==============================================
 // MOBILE NAVIGATION MENU
+// USED ON EVERY PAGE
 // ==============================================
 
-// Opens and closes the navigation menu on smaller screens
 function toggleMenu() {
   const navLinks = document.getElementById("navLinks");
 
-  navLinks.classList.toggle("show");
+  if (navLinks) {
+    navLinks.classList.toggle("show");
+  }
 }
 
 
 // ==============================================
 // HIDDEN WIMJEFF EASTER EGG
+// USED ON EVERY PAGE
 // ==============================================
 
-// The hidden word that activates the animation
+// Secret word that starts the animation
 const secretWord = "wimjeff";
 
 /*
-  Checks whether the clicked element is interactive.
+  Checks whether the selected element is interactive.
 
-  The hidden input will not open when the user clicks
-  a link, button, input field, textarea, label, or the
-  bouncing WimJeff text.
+  Double-clicking or double-tapping these elements
+  will not open the hidden text field.
 */
 function isInteractiveElement(element) {
   return element.closest(
-    "a, button, input, textarea, select, label, .wimjeff-bouncer, .media-carousel"
+    "a, button, input, textarea, select, label, video, " +
+    ".wimjeff-bouncer, .media-carousel"
   );
 }
 
 /*
   Creates the text field at the location where
-  the user double-clicked or tapped.
+  the user double-clicked or double-tapped.
 */
 function showSecretInput(xPosition, yPosition) {
-
-  // Removes an older hidden input if one is still visible
   const oldInput = document.querySelector(".secret-word-input");
 
   if (oldInput) {
     oldInput.remove();
   }
 
-  // Creates a new input field
   const secretInput = document.createElement("input");
 
   secretInput.type = "text";
@@ -53,8 +53,7 @@ function showSecretInput(xPosition, yPosition) {
   secretInput.setAttribute("aria-label", "Hidden text field");
 
   /*
-    Keeps the input inside the visible screen,
-    even when the user clicks close to an edge.
+    Keeps the input field inside the visible screen.
   */
   const inputHalfWidth = 125;
   const inputHalfHeight = 25;
@@ -69,41 +68,29 @@ function showSecretInput(xPosition, yPosition) {
     Math.min(yPosition, window.innerHeight - inputHalfHeight)
   );
 
-  // Positions the input where the user clicked or tapped
   secretInput.style.left = safeXPosition + "px";
   secretInput.style.top = safeYPosition + "px";
 
-  // Adds the input to the current page
   document.body.appendChild(secretInput);
-
-  // Automatically places the typing cursor in the input
   secretInput.focus();
 
   /*
-    Waits until the user presses Enter.
-
-    The animation does not start while the user
-    is still typing.
+    Waits for Enter before checking the entered word.
   */
   secretInput.addEventListener("keydown", function (event) {
-
-    // Closes the input when Escape is pressed
     if (event.key === "Escape") {
       secretInput.remove();
       return;
     }
 
-    // Does nothing until Enter is pressed
     if (event.key !== "Enter") {
       return;
     }
 
-    // Prevents Enter from performing another browser action
     event.preventDefault();
 
     /*
-      Converts the entered text to lowercase and removes
-      spaces so uppercase and lowercase both work.
+      Makes the check case-insensitive and removes spaces.
     */
     const typedText = secretInput.value
       .trim()
@@ -112,14 +99,7 @@ function showSecretInput(xPosition, yPosition) {
 
     /*
       Accepts the complete word or at least two
-      consecutive letters from the word.
-
-      Examples:
-      WimJeff
-      wimjeff
-      Wim
-      Jeff
-      imj
+      consecutive letters from WimJeff.
     */
     const isPartOfSecretWord =
       typedText.length >= 2 &&
@@ -129,16 +109,9 @@ function showSecretInput(xPosition, yPosition) {
       secretInput.remove();
       startWimJeffAnimation();
     } else {
-      /*
-        If the entered word is incorrect, the input
-        briefly shakes and remains available.
-      */
       secretInput.classList.remove("input-error");
 
-      /*
-        Forces the browser to restart the error animation
-        if Enter is pressed incorrectly more than once.
-      */
+      // Restarts the error animation
       void secretInput.offsetWidth;
 
       secretInput.classList.add("input-error");
@@ -147,8 +120,7 @@ function showSecretInput(xPosition, yPosition) {
   });
 
   /*
-    Removes the input when the user clicks or taps
-    somewhere else without pressing Enter.
+    Removes the input if the user clicks elsewhere.
   */
   secretInput.addEventListener("blur", function () {
     setTimeout(function () {
@@ -160,36 +132,30 @@ function showSecretInput(xPosition, yPosition) {
 }
 
 /*
-  Creates the animated WimJeff text and makes it
-  bounce across the current screen.
+  Creates the bouncing WimJeff text.
 */
 function startWimJeffAnimation() {
-
-  /*
-    Removes an older WimJeff animation before a new
-    one is created. This prevents duplicates.
-  */
   const oldAnimation = document.querySelector(".wimjeff-bouncer");
 
   if (oldAnimation) {
     oldAnimation.remove();
   }
 
-  // Creates the bouncing text
   const bouncingText = document.createElement("div");
 
   bouncingText.className = "wimjeff-bouncer";
   bouncingText.textContent = "WimJeff";
   bouncingText.title = "Click to close";
   bouncingText.setAttribute("role", "button");
-  bouncingText.setAttribute("aria-label", "Click to remove WimJeff");
+  bouncingText.setAttribute(
+    "aria-label",
+    "Click to remove WimJeff"
+  );
 
-  // Adds the bouncing text to the current page
   document.body.appendChild(bouncingText);
 
   /*
-    WimJeff now remains on the screen until the user
-    clicks directly on the bouncing text.
+    WimJeff disappears only when it is clicked directly.
   */
   bouncingText.addEventListener("click", function (event) {
     event.stopPropagation();
@@ -203,23 +169,12 @@ function startWimJeffAnimation() {
 // ==============================================
 
 /*
-  Stores the last time a touchscreen was used.
-
-  This prevents a phone from activating both the
-  phone double-tap code and computer double-click code.
+  Prevents touchscreen taps from also activating
+  the browser's computer double-click event.
 */
 let lastTouchInteractionTime = 0;
 
-/*
-  Opens the hidden input after a double-click
-  with a mouse on a computer.
-*/
 document.addEventListener("dblclick", function (event) {
-
-  /*
-    Ignores the double-click if a touchscreen was
-    used during the previous 800 milliseconds.
-  */
   const recentlyUsedTouchscreen =
     Date.now() - lastTouchInteractionTime < 800;
 
@@ -227,7 +182,6 @@ document.addEventListener("dblclick", function (event) {
     return;
   }
 
-  // Ignores links, buttons and other interactive elements
   if (isInteractiveElement(event.target)) {
     return;
   }
@@ -241,8 +195,8 @@ document.addEventListener("dblclick", function (event) {
 // ==============================================
 
 /*
-  Information about the finger that is currently
-  touching the screen.
+  Information about the finger currently touching
+  the screen.
 */
 let activeTouchPointerId = null;
 let touchStartX = 0;
@@ -262,8 +216,7 @@ let previousValidTapY = 0;
 let previousValidTapTarget = null;
 
 /*
-  Strict limits used to distinguish a tap
-  from scrolling or swiping.
+  Strict limits that distinguish tapping from scrolling.
 */
 const maximumFingerMovement = 8;
 const maximumTapLength = 280;
@@ -271,10 +224,7 @@ const maximumTimeBetweenTaps = 400;
 const maximumDistanceBetweenTaps = 12;
 
 /*
-  Resets the saved first tap.
-
-  This prevents an old tap from accidentally
-  being combined with a later tap.
+  Clears the saved first tap.
 */
 function resetPreviousValidTap() {
   previousValidTapTime = 0;
@@ -284,8 +234,7 @@ function resetPreviousValidTap() {
 }
 
 /*
-  A scroll event immediately cancels the current
-  gesture and any previously saved first tap.
+  Any scrolling cancels the tap.
 */
 window.addEventListener(
   "scroll",
@@ -300,24 +249,17 @@ window.addEventListener(
 );
 
 /*
-  Saves the exact position where the finger
-  first touches the screen.
+  Records where a finger first touches the screen.
 */
 document.addEventListener(
   "pointerdown",
   function (event) {
-
-    // This section is only for fingers on touchscreens
     if (event.pointerType !== "touch") {
       return;
     }
 
     lastTouchInteractionTime = Date.now();
 
-    /*
-      Ignores links, buttons, videos, carousel controls
-      and other interactive elements.
-    */
     if (isInteractiveElement(event.target)) {
       activeTouchPointerId = null;
       resetPreviousValidTap();
@@ -339,15 +281,11 @@ document.addEventListener(
 );
 
 /*
-  Detects even small finger movement.
-
-  If the finger moves more than 8 pixels,
-  the gesture is treated as scrolling or swiping.
+  Detects finger movement.
 */
 document.addEventListener(
   "pointermove",
   function (event) {
-
     if (
       event.pointerType !== "touch" ||
       event.pointerId !== activeTouchPointerId
@@ -377,12 +315,11 @@ document.addEventListener(
 );
 
 /*
-  A cancelled touch can never be used as a tap.
+  Cancels an interrupted touch.
 */
 document.addEventListener(
   "pointercancel",
   function (event) {
-
     if (
       event.pointerType !== "touch" ||
       event.pointerId !== activeTouchPointerId
@@ -400,13 +337,12 @@ document.addEventListener(
 );
 
 /*
-  Checks whether the completed gesture was a
-  real tap and whether it matches the first tap.
+  Checks whether two completed taps happened
+  on the same element and almost the same spot.
 */
 document.addEventListener(
   "pointerup",
   function (event) {
-
     if (
       event.pointerType !== "touch" ||
       event.pointerId !== activeTouchPointerId
@@ -416,16 +352,13 @@ document.addEventListener(
 
     lastTouchInteractionTime = Date.now();
 
-    // Saves the target before resetting the active pointer
     const currentTapTarget = event.target;
 
     activeTouchPointerId = null;
 
-    // Calculates how long the finger touched the screen
     const tapLength =
       Date.now() - touchStartTime;
 
-    // Calculates the total movement of the finger
     const horizontalMovement =
       event.clientX - touchStartX;
 
@@ -437,21 +370,13 @@ document.addEventListener(
       verticalMovement * verticalMovement
     );
 
-    /*
-      Checks whether the page position changed
-      while the finger was touching the screen.
-    */
     const pagePositionChanged =
       window.scrollX !== touchStartScrollX ||
       window.scrollY !== touchStartScrollY;
 
     /*
-      This gesture is rejected if the user:
-
-      - Moved their finger
-      - Scrolled the page
-      - Swiped
-      - Held their finger down too long
+      Rejects the gesture if the user moved,
+      scrolled, swiped or held the screen.
     */
     const isInvalidTap =
       touchMoved ||
@@ -465,7 +390,6 @@ document.addEventListener(
       return;
     }
 
-    // Ignores interactive page elements
     if (isInteractiveElement(currentTapTarget)) {
       resetPreviousValidTap();
       return;
@@ -473,11 +397,9 @@ document.addEventListener(
 
     const currentTapTime = Date.now();
 
-    // Calculates the time between both taps
     const timeBetweenTaps =
       currentTapTime - previousValidTapTime;
 
-    // Calculates the exact distance between both taps
     const horizontalTapDistance =
       event.clientX - previousValidTapX;
 
@@ -490,20 +412,11 @@ document.addEventListener(
     );
 
     /*
-      Requires both taps to land on the exact same
-      HTML element as an additional safety check.
+      Both taps must land on the same HTML element.
     */
     const tappedSameElement =
       currentTapTarget === previousValidTapTarget;
 
-    /*
-      Opens the input only when:
-
-      1. A first valid tap exists.
-      2. The second tap happened quickly.
-      3. Both taps are within 12 pixels.
-      4. Both taps landed on the same element.
-    */
     const isValidDoubleTap =
       previousValidTapTime !== 0 &&
       timeBetweenTaps <= maximumTimeBetweenTaps &&
@@ -523,10 +436,8 @@ document.addEventListener(
     }
 
     /*
-      This was one valid tap.
-
-      It is saved while the code waits for a second
-      tap at almost exactly the same position.
+      Saves the first valid tap while waiting for
+      a second tap.
     */
     previousValidTapTime = currentTapTime;
     previousValidTapX = event.clientX;
@@ -538,239 +449,52 @@ document.addEventListener(
   }
 );
 
+
 // ==============================================
 // SCROLL FADE-IN ANIMATION
 // USED ON EVERY PAGE
 // ==============================================
 
-/*
-  Starts the scroll animation after the HTML page
-  has completely loaded.
-*/
 document.addEventListener("DOMContentLoaded", function () {
-
   /*
-    Selects the content sections underneath the
-    visible top section of every page.
+    Selects sections below the visible top portion.
 
-    The Home hero and the title banners are not selected,
-    so they remain visible when the page first opens.
+    The Home hero and page-title banners remain visible
+    when the page first opens.
   */
   const sectionsToReveal = document.querySelectorAll(
     "#home-content > section, main > section.section, footer"
   );
 
-  /*
-    Gives every selected section the hidden
-    scroll animation class.
-  */
   sectionsToReveal.forEach(function (section) {
     section.classList.add("scroll-reveal");
   });
 
-  /*
-    Checks whether the browser supports
-    IntersectionObserver.
-  */
   if ("IntersectionObserver" in window) {
-
-    /*
-      Watches the hidden sections and detects when
-      they enter the visible part of the screen.
-    */
     const revealObserver = new IntersectionObserver(
       function (entries, observer) {
-
         entries.forEach(function (entry) {
-
-          // Reveals the section when it enters the screen
           if (entry.isIntersecting) {
             entry.target.classList.add("reveal-visible");
-
-            /*
-              Stops watching the section after it has
-              appeared. It will remain visible afterward.
-            */
             observer.unobserve(entry.target);
           }
         });
       },
       {
-        // Starts the animation when 12% is visible
         threshold: 0.12,
-
-        /*
-          Waits until the section is slightly inside
-          the screen before revealing it.
-        */
         rootMargin: "0px 0px -55px 0px"
       }
     );
 
-    // Starts watching every hidden section
     sectionsToReveal.forEach(function (section) {
       revealObserver.observe(section);
     });
-
   } else {
-
     /*
-      Fallback for older browsers.
-
-      If IntersectionObserver is unavailable,
-      all sections are shown normally.
+      Older-browser fallback.
     */
     sectionsToReveal.forEach(function (section) {
       section.classList.add("reveal-visible");
     });
   }
-});
-
-// ==============================================
-// PROJECT MEDIA CAROUSEL
-// USED ON THE WORK PAGE
-// ==============================================
-
-document.addEventListener("DOMContentLoaded", function () {
-
-  // Finds the project carousel
-  const carousel = document.getElementById("projectCarousel");
-
-  /*
-    Stops here on pages that do not contain
-    the project carousel.
-  */
-  if (!carousel) {
-    return;
-  }
-
-  // Finds all the required carousel elements
-  const carouselTrack = carousel.querySelector(".carousel-track");
-  const carouselSlides = carousel.querySelectorAll(".carousel-slide");
-  const previousButton = carousel.querySelector(".carousel-previous");
-  const nextButton = carousel.querySelector(".carousel-next");
-  const carouselDots = carousel.querySelectorAll(".carousel-dot");
-  const carouselViewport = carousel.querySelector(".carousel-viewport");
-
-  // Stores the number of the currently visible slide
-  let currentSlide = 0;
-
-  // Stores the starting position of a phone swipe
-  let touchStartX = 0;
-
-  /*
-    Displays the selected slide and updates
-    the active navigation dot.
-  */
-  function showSlide(slideNumber) {
-
-    /*
-      Returns to the first slide after the last slide.
-    */
-    if (slideNumber >= carouselSlides.length) {
-      currentSlide = 0;
-
-    /*
-      Goes to the last slide when moving backward
-      from the first slide.
-    */
-    } else if (slideNumber < 0) {
-      currentSlide = carouselSlides.length - 1;
-
-    } else {
-      currentSlide = slideNumber;
-    }
-
-    // Moves the complete row of slides
-    carouselTrack.style.transform =
-      "translateX(-" + currentSlide * 100 + "%)";
-
-    // Updates the active navigation dot
-    carouselDots.forEach(function (dot, index) {
-      dot.classList.toggle("active", index === currentSlide);
-    });
-
-    /*
-      Pauses videos on slides that are no longer visible.
-      This will also work if videos are added later.
-    */
-    carouselSlides.forEach(function (slide, index) {
-      const video = slide.querySelector("video");
-
-      if (video && index !== currentSlide) {
-        video.pause();
-      }
-    });
-  }
-
-  // Shows the previous slide
-  previousButton.addEventListener("click", function () {
-    showSlide(currentSlide - 1);
-  });
-
-  // Shows the next slide
-  nextButton.addEventListener("click", function () {
-    showSlide(currentSlide + 1);
-  });
-
-  // Allows every dot to open its matching slide
-  carouselDots.forEach(function (dot, index) {
-    dot.addEventListener("click", function () {
-      showSlide(index);
-    });
-  });
-
-  // Saves where a phone swipe started
-  carouselViewport.addEventListener(
-    "touchstart",
-    function (event) {
-      touchStartX = event.changedTouches[0].clientX;
-    },
-    {
-      passive: true
-    }
-  );
-
-  // Checks the direction of the completed phone swipe
-  carouselViewport.addEventListener(
-    "touchend",
-    function (event) {
-      const touchEndX = event.changedTouches[0].clientX;
-      const swipeDistance = touchStartX - touchEndX;
-
-      // Ignores very small finger movements
-      if (Math.abs(swipeDistance) < 45) {
-        return;
-      }
-
-      // A left swipe shows the next slide
-      if (swipeDistance > 0) {
-        showSlide(currentSlide + 1);
-
-      // A right swipe shows the previous slide
-      } else {
-        showSlide(currentSlide - 1);
-      }
-    },
-    {
-      passive: true
-    }
-  );
-
-  // Allows the keyboard arrow keys to control the carousel
-  carousel.addEventListener("keydown", function (event) {
-
-    if (event.key === "ArrowLeft") {
-      event.preventDefault();
-      showSlide(currentSlide - 1);
-    }
-
-    if (event.key === "ArrowRight") {
-      event.preventDefault();
-      showSlide(currentSlide + 1);
-    }
-  });
-
-  // Makes sure the carousel starts on the first slide
-  showSlide(0);
 });

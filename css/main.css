@@ -1,0 +1,621 @@
+/* ============================================== */
+/* GENERAL STYLES USED BY EVERY HTML PAGE         */
+/* ============================================== */
+
+/* Removes the default spacing added by the browser */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Makes links to sections scroll smoothly */
+html {
+  scroll-behavior: smooth;
+}
+
+/* General design of the website */
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #fffaf5;
+  color: #2a211d;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Keeps the footer at the bottom of short pages */
+main {
+  flex: 1;
+}
+
+/* Makes all images responsive */
+img {
+  max-width: 100%;
+}
+
+/* ============================================== */
+/* HEADER AND NAVIGATION FOR EVERY HTML PAGE      */
+/* ============================================== */
+
+header {
+  position: relative;
+  z-index: 1000;
+  background: linear-gradient(90deg, #7c2d12, #c2410c, #ea580c);
+  color: white;
+  box-shadow: 0 4px 18px rgba(43, 20, 10, 0.2);
+}
+
+/* Centers the navigation */
+.navbar {
+  width: 90%;
+  max-width: 1180px;
+  min-height: 82px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 25px;
+}
+
+/* Portfolio logo */
+.logo {
+  color: white;
+  font-size: 25px;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.logo span {
+  color: #ffedd5;
+}
+
+/* Navigation list */
+.navbar ul {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  margin-left: auto;
+}
+
+/* Navigation links */
+.navbar a {
+  position: relative;
+  padding: 9px 0;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+/* Line underneath navigation links */
+.navbar a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 2px;
+  width: 0;
+  height: 2px;
+  border-radius: 5px;
+  background-color: #ffedd5;
+  transition: width 0.3s ease;
+}
+
+.navbar a:hover,
+.navbar a.active {
+  color: #ffedd5;
+}
+
+.navbar a:hover::after,
+.navbar a.active::after {
+  width: 100%;
+}
+
+/* Mobile menu button */
+.menu-btn {
+  display: none;
+  border: none;
+  background: none;
+  color: white;
+  font-size: 29px;
+  cursor: pointer;
+}
+
+/* ============================================== */
+/* BUTTONS USED THROUGHOUT THE WEBSITE            */
+/* ============================================== */
+
+.btn {
+  display: inline-block;
+  padding: 13px 24px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #c2410c, #f97316);
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(194, 65, 12, 0.24);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(194, 65, 12, 0.32);
+}
+
+/* ============================================== */
+/* SHARED CONTENT SECTIONS                        */
+/* ============================================== */
+
+.section {
+  width: 90%;
+  max-width: 1100px;
+  margin: 70px auto;
+}
+
+.section-heading {
+  margin-bottom: 28px;
+}
+
+.section-small-title {
+  margin-bottom: 5px;
+  color: #ea580c;
+  font-size: 13px;
+  font-weight: bold;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+}
+
+.section h2 {
+  margin-bottom: 18px;
+  color: #7c2d12;
+  font-size: 31px;
+  line-height: 1.2;
+}
+
+.section p {
+  font-size: 16px;
+}
+
+.section > p + p {
+  margin-top: 16px;
+}
+
+/* Shared white card */
+.card {
+  margin-bottom: 10px;
+  padding: 24px;
+  border: 1px solid #fed7aa;
+  border-radius: 12px;
+  background-color: white;
+  box-shadow: 0 6px 20px rgba(124, 45, 18, 0.12);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(124, 45, 18, 0.18);
+}
+
+.card h3 {
+  margin-bottom: 10px;
+  color: #9a3412;
+  font-size: 20px;
+}
+
+.card p {
+  margin-bottom: 10px;
+}
+
+/* Shared orange text link */
+.small-link {
+  color: #c2410c;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.small-link:hover {
+  color: #7c2d12;
+  text-decoration: underline;
+}
+
+/* ============================================== */
+/* PAGE TITLE ON ABOUT, WORK AND CONTACT          */
+/* ============================================== */
+
+.page-title {
+  padding: 65px 20px;
+  background:
+    radial-gradient(
+      circle at 75% 30%,
+      rgba(253, 186, 116, 0.32),
+      transparent 28%
+    ),
+    linear-gradient(135deg, #7c2d12, #ea580c);
+  color: white;
+  text-align: center;
+}
+
+.page-title h1 {
+  color: white;
+  font-size: 39px;
+}
+
+.page-title p {
+  margin-top: 9px;
+  color: #ffedd5;
+}
+
+/* ============================================== */
+/* SHARED SKILL LABELS                            */
+/* ============================================== */
+
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.skills span {
+  padding: 10px 15px;
+  border: 1px solid #fdba74;
+  border-radius: 20px;
+  background-color: #fff7ed;
+  color: #7c2d12;
+  font-weight: bold;
+  box-shadow: 0 3px 10px rgba(124, 45, 18, 0.08);
+}
+
+/* ============================================== */
+/* SHARED CARD GRID                               */
+/* ============================================== */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: start;
+  gap: 25px;
+}
+
+/* ============================================== */
+/* FOOTER USED BY EVERY HTML PAGE                 */
+/* ============================================== */
+
+footer {
+  padding: 20px;
+  background: linear-gradient(90deg, #541c08, #9a3412, #c2410c);
+  color: white;
+  text-align: center;
+}
+
+/* ============================================== */
+/* SHARED ANIMATIONS                              */
+/* ============================================== */
+
+@keyframes moveUp {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes arrowMove {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+/* ============================================== */
+/* SHARED TABLET DESIGN                           */
+/* ============================================== */
+
+@media screen and (max-width: 900px) {
+  .navbar {
+    width: 92%;
+  }
+
+  .navbar ul {
+    gap: 20px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ============================================== */
+/* SHARED PHONE DESIGN                            */
+/* ============================================== */
+
+@media screen and (max-width: 650px) {
+  .navbar {
+    width: 90%;
+    min-height: 72px;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 10px 0;
+  }
+
+  .logo {
+    font-size: 22px;
+  }
+
+  .menu-btn {
+    display: block;
+    margin-left: auto;
+  }
+
+  .navbar ul {
+    display: none;
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 7px;
+    margin: 7px 0 8px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .navbar ul.show {
+    display: flex;
+  }
+
+  .navbar ul li,
+  .navbar a {
+    width: 100%;
+  }
+
+  .section {
+    width: 90%;
+    margin: 55px auto;
+  }
+
+  .section h2 {
+    font-size: 27px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .page-title {
+    padding: 50px 20px;
+  }
+
+  .page-title h1 {
+    font-size: 32px;
+  }
+}
+
+/* ============================================== */
+/* HIDDEN WIMJEFF EASTER EGG                      */
+/* ============================================== */
+
+.secret-word-input {
+  position: fixed;
+  z-index: 10000;
+  width: 250px;
+  padding: 13px 16px;
+  border: 2px solid #f97316;
+  border-radius: 10px;
+  background-color: #fffaf5;
+  color: #431b0b;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 15px;
+  box-shadow:
+    0 10px 30px rgba(67, 27, 11, 0.28),
+    0 0 0 5px rgba(249, 115, 22, 0.12);
+  outline: none;
+  transform: translate(-50%, -50%);
+  animation: secretInputAppear 0.25s ease;
+}
+
+.secret-word-input::placeholder {
+  color: #9a6a55;
+}
+
+.secret-word-input:focus {
+  border-color: #c2410c;
+  box-shadow:
+    0 12px 35px rgba(67, 27, 11, 0.32),
+    0 0 0 6px rgba(249, 115, 22, 0.17);
+}
+
+.secret-word-input.input-error {
+  border-color: #dc2626;
+  box-shadow:
+    0 12px 35px rgba(67, 27, 11, 0.32),
+    0 0 0 6px rgba(220, 38, 38, 0.15);
+  animation: secretInputError 0.35s ease;
+}
+
+/* Bouncing WimJeff text */
+.wimjeff-bouncer {
+  position: fixed;
+  z-index: 99999;
+  top: 8%;
+  left: 5%;
+  padding: 17px 31px;
+  border: 3px solid #ffedd5;
+  border-radius: 50px;
+  background: linear-gradient(135deg, #7c2d12, #ea580c, #fb923c);
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 45px;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  box-shadow:
+    0 14px 40px rgba(67, 27, 11, 0.45),
+    0 0 30px rgba(249, 115, 22, 0.45);
+  animation: wimJeffBounce 8s linear infinite;
+}
+
+.wimjeff-bouncer:hover {
+  border-color: white;
+  box-shadow:
+    0 16px 45px rgba(67, 27, 11, 0.5),
+    0 0 38px rgba(249, 115, 22, 0.6);
+}
+
+@keyframes secretInputAppear {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.75);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes secretInputError {
+  0% {
+    transform: translate(-50%, -50%);
+  }
+
+  25% {
+    transform: translate(calc(-50% - 7px), -50%);
+  }
+
+  50% {
+    transform: translate(calc(-50% + 7px), -50%);
+  }
+
+  75% {
+    transform: translate(calc(-50% - 4px), -50%);
+  }
+
+  100% {
+    transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes wimJeffBounce {
+  0% {
+    top: 7%;
+    left: 4%;
+    transform: rotate(-7deg) scale(1);
+  }
+
+  15% {
+    top: 70%;
+    left: 19%;
+    transform: rotate(7deg) scale(1.06);
+  }
+
+  30% {
+    top: 13%;
+    left: 40%;
+    transform: rotate(-6deg) scale(0.98);
+  }
+
+  45% {
+    top: 66%;
+    left: 67%;
+    transform: rotate(7deg) scale(1.05);
+  }
+
+  60% {
+    top: 10%;
+    left: 76%;
+    transform: rotate(-6deg) scale(1);
+  }
+
+  75% {
+    top: 69%;
+    left: 45%;
+    transform: rotate(7deg) scale(1.06);
+  }
+
+  90% {
+    top: 30%;
+    left: 10%;
+    transform: rotate(-5deg) scale(0.98);
+  }
+
+  100% {
+    top: 7%;
+    left: 4%;
+    transform: rotate(-7deg) scale(1);
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .secret-word-input {
+    width: 230px;
+    padding: 12px 14px;
+    font-size: 14px;
+  }
+
+  .wimjeff-bouncer {
+    padding: 13px 22px;
+    font-size: 31px;
+    animation-duration: 9s;
+  }
+}
+
+/* ============================================== */
+/* SCROLL FADE-IN ANIMATION                       */
+/* ============================================== */
+
+.scroll-reveal {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(45px);
+  transition:
+    opacity 0.9s ease,
+    transform 0.9s ease,
+    visibility 0.9s ease;
+  will-change: opacity, transform;
+}
+
+.scroll-reveal.reveal-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Disables movement when a user prefers less animation */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition: none;
+  }
+}

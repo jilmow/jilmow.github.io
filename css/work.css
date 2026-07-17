@@ -1,0 +1,330 @@
+/* ============================================== */
+/* WORK.HTML - PROJECT MEDIA CAROUSEL             */
+/* ============================================== */
+
+/* Complete gallery section */
+.project-gallery-section {
+  position: relative;
+  margin-top: 85px;
+  padding-top: 25px;
+  isolation: isolate;
+}
+
+/* Soft glow behind the carousel */
+.project-gallery-section::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 20px;
+  right: -45px;
+  bottom: -25px;
+  left: -45px;
+  border-radius: 40px;
+  background:
+    radial-gradient(
+      circle at 20% 25%,
+      rgba(249, 115, 22, 0.13),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 80% 75%,
+      rgba(194, 65, 12, 0.1),
+      transparent 37%
+    );
+  pointer-events: none;
+}
+
+/* Complete carousel */
+.media-carousel {
+  width: 100%;
+  background-color: transparent;
+  outline: none;
+}
+
+/* Keyboard focus effect */
+.media-carousel:focus .carousel-viewport {
+  box-shadow:
+    0 18px 46px rgba(124, 45, 18, 0.2),
+    0 0 0 4px rgba(249, 115, 22, 0.14);
+}
+
+/* Visible carousel window */
+.carousel-viewport {
+  position: relative;
+  width: 100%;
+  border: 1px solid rgba(253, 186, 116, 0.75);
+  border-radius: 25px;
+  background:
+    radial-gradient(
+      circle at 78% 25%,
+      rgba(251, 146, 60, 0.28),
+      transparent 35%
+    ),
+    linear-gradient(135deg, #2a140b, #702b12);
+  box-shadow:
+    0 18px 45px rgba(124, 45, 18, 0.18),
+    0 5px 15px rgba(124, 45, 18, 0.08);
+  overflow: hidden;
+  transition:
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+}
+
+.carousel-viewport:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 23px 52px rgba(124, 45, 18, 0.22),
+    0 8px 20px rgba(124, 45, 18, 0.1);
+}
+
+/* Soft lighting effect */
+.carousel-viewport::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  border-radius: 25px;
+  background:
+    linear-gradient(
+      115deg,
+      rgba(255, 255, 255, 0.06),
+      transparent 28%,
+      transparent 72%,
+      rgba(253, 186, 116, 0.08)
+    );
+  pointer-events: none;
+}
+
+/* Holds all slides */
+.carousel-track {
+  display: flex;
+  transition: transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* One carousel slide */
+.carousel-slide {
+  position: relative;
+  min-width: 100%;
+  height: 500px;
+  margin: 0;
+  padding: 22px 72px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(251, 146, 60, 0.16),
+      transparent 58%
+    ),
+    linear-gradient(135deg, #211008, #66260f);
+  overflow: hidden;
+}
+
+/* Carousel images and videos */
+.carousel-slide img,
+.carousel-slide video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border-radius: 17px;
+  object-fit: contain;
+  object-position: center;
+  box-shadow: 0 14px 35px rgba(20, 8, 3, 0.3);
+}
+
+/* Project caption */
+.carousel-slide figcaption {
+  position: absolute;
+  z-index: 4;
+  left: 95px;
+  bottom: 40px;
+  max-width: calc(100% - 190px);
+  display: flex;
+  flex-direction: column;
+  padding: 13px 19px;
+  border: 1px solid rgba(255, 237, 213, 0.27);
+  border-radius: 12px;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(67, 27, 11, 0.93),
+      rgba(124, 45, 18, 0.88)
+    );
+  color: white;
+  box-shadow: 0 10px 28px rgba(20, 8, 3, 0.34);
+  backdrop-filter: blur(8px);
+}
+
+.carousel-slide figcaption strong {
+  color: #fdba74;
+  font-size: 17px;
+}
+
+.carousel-slide figcaption span {
+  color: #ffedd5;
+  font-size: 13px;
+}
+
+/* Carousel arrow buttons */
+.carousel-button {
+  position: absolute;
+  z-index: 5;
+  top: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid rgba(255, 237, 213, 0.4);
+  border-radius: 50%;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(124, 45, 18, 0.92),
+      rgba(234, 88, 12, 0.92)
+    );
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 8px 22px rgba(20, 8, 3, 0.28);
+  transform: translateY(-50%);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.carousel-previous {
+  left: 18px;
+}
+
+.carousel-next {
+  right: 18px;
+}
+
+.carousel-button:hover {
+  background: linear-gradient(135deg, #ea580c, #fb923c);
+  transform: translateY(-50%) scale(1.09);
+  box-shadow:
+    0 10px 25px rgba(20, 8, 3, 0.35),
+    0 0 18px rgba(249, 115, 22, 0.28);
+}
+
+/* Carousel navigation dots */
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 9px;
+  padding: 20px 0 4px;
+  background-color: transparent;
+}
+
+.carousel-dot {
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  border: 1px solid #f97316;
+  border-radius: 50%;
+  background-color: #ffedd5;
+  cursor: pointer;
+  box-shadow: 0 3px 8px rgba(124, 45, 18, 0.12);
+  transition:
+    width 0.3s ease,
+    border-radius 0.3s ease,
+    background-color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.carousel-dot:hover {
+  background-color: #fdba74;
+  transform: scale(1.15);
+}
+
+.carousel-dot.active {
+  width: 31px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #c2410c, #f97316);
+}
+
+/* ============================================== */
+/* WORK.HTML - TABLET CAROUSEL                    */
+/* ============================================== */
+
+@media screen and (max-width: 900px) {
+  .carousel-slide {
+    height: 420px;
+    padding: 20px 62px;
+  }
+
+  .carousel-slide figcaption {
+    left: 82px;
+    bottom: 34px;
+    max-width: calc(100% - 164px);
+  }
+}
+
+/* ============================================== */
+/* WORK.HTML - PHONE CAROUSEL                     */
+/* ============================================== */
+
+@media screen and (max-width: 650px) {
+  .project-gallery-section {
+    margin-top: 60px;
+    padding-top: 12px;
+  }
+
+  .project-gallery-section::before {
+    right: -15px;
+    left: -15px;
+    border-radius: 25px;
+  }
+
+  .carousel-viewport,
+  .carousel-viewport::after {
+    border-radius: 18px;
+  }
+
+  .carousel-slide {
+    height: 320px;
+    padding: 15px 48px;
+  }
+
+  .carousel-slide img,
+  .carousel-slide video {
+    border-radius: 12px;
+  }
+
+  .carousel-button {
+    width: 39px;
+    height: 39px;
+    font-size: 18px;
+  }
+
+  .carousel-previous {
+    left: 7px;
+  }
+
+  .carousel-next {
+    right: 7px;
+  }
+
+  .carousel-slide figcaption {
+    left: 58px;
+    bottom: 25px;
+    max-width: calc(100% - 116px);
+    padding: 9px 12px;
+  }
+
+  .carousel-slide figcaption strong {
+    font-size: 14px;
+  }
+
+  .carousel-slide figcaption span {
+    font-size: 11px;
+  }
+
+  .carousel-dots {
+    padding-top: 16px;
+  }
+}

@@ -1,0 +1,46 @@
+/* ============================================== */
+/* CONTACT.HTML - CONTACT DETAILS                 */
+/* ============================================== */
+
+/* Centers the Contact Details card */
+.contact-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Contact Details card */
+.contact-info {
+  width: 100%;
+  max-width: 600px;
+  padding: 32px;
+  border: 1px solid #fed7aa;
+  border-radius: 12px;
+  background-color: white;
+  box-shadow: 0 6px 20px rgba(124, 45, 18, 0.12);
+}
+
+.contact-info p {
+  margin-bottom: 10px;
+}
+
+.contact-info a {
+  color: #c2410c;
+  text-decoration: none;
+}
+
+.contact-info a:hover {
+  color: #7c2d12;
+  text-decoration: underline;
+}
+
+/* ============================================== */
+/* CONTACT.HTML - PHONE DESIGN                    */
+/* ============================================== */
+
+@media screen and (max-width: 650px) {
+  .contact-info {
+    max-width: 100%;
+    padding: 25px;
+  }
+}
