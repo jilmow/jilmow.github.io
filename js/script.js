@@ -204,10 +204,26 @@ function startWimJeffAnimation() {
 
 /*
   Opens the hidden input after a double-click
-  on a non-interactive area.
+  on a computer.
+
+  Phones and tablets use the separate double-tap
+  code further below.
 */
 document.addEventListener("dblclick", function (event) {
 
+  /*
+    Prevents the computer double-click handler
+    from also running on a touchscreen.
+  */
+  const isTouchscreen = window.matchMedia(
+    "(pointer: coarse)"
+  ).matches;
+
+  if (isTouchscreen) {
+    return;
+  }
+
+  // Ignores links, buttons, the carousel and other controls
   if (isInteractiveElement(event.target)) {
     return;
   }
@@ -217,32 +233,200 @@ document.addEventListener("dblclick", function (event) {
 
 
 // ==============================================
-// PHONE AND TABLET TAP
+// PHONE AND TABLET DOUBLE-TAP
 // ==============================================
 
 /*
-  Opens the hidden input after one tap on a
-  non-interactive area on a phone or tablet.
+  These variables store information about the
+  current finger gesture.
+*/
+let phoneTouchStartX = 0;
+let phoneTouchStartY = 0;
+let phoneTouchStartTime = 0;
+let phoneTouchMoved = false;
+
+/*
+  These variables store information about
+  the previous completed tap.
+*/
+let previousTapTime = 0;
+let previousTapX = 0;
+let previousTapY = 0;
+
+/*
+  Maximum values used to decide whether the
+  gesture was a tap or a scroll.
+*/
+const maximumTapMovement = 15;
+const maximumTapDuration = 350;
+const maximumDoubleTapDelay = 450;
+const maximumDistanceBetweenTaps = 50;
+
+/*
+  Saves the starting position and time when
+  the user first touches the screen.
 */
 document.addEventListener(
-  "touchend",
+  "touchstart",
   function (event) {
-
-    if (isInteractiveElement(event.target)) {
-      return;
-    }
-
-    // Gets the location of the completed tap
     const touchLocation = event.changedTouches[0];
 
     if (!touchLocation) {
       return;
     }
 
-    showSecretInput(
-      touchLocation.clientX,
-      touchLocation.clientY
+    phoneTouchStartX = touchLocation.clientX;
+    phoneTouchStartY = touchLocation.clientY;
+    phoneTouchStartTime = Date.now();
+    phoneTouchMoved = false;
+  },
+  {
+    passive: true
+  }
+);
+
+/*
+  Detects whether the finger moved far enough
+  for the gesture to be considered scrolling.
+*/
+document.addEventListener(
+  "touchmove",
+  function (event) {
+    const touchLocation = event.changedTouches[0];
+
+    if (!touchLocation) {
+      return;
+    }
+
+    const horizontalMovement = Math.abs(
+      touchLocation.clientX - phoneTouchStartX
     );
+
+    const verticalMovement = Math.abs(
+      touchLocation.clientY - phoneTouchStartY
+    );
+
+    /*
+      If the finger moves more than 15 pixels,
+      the gesture is treated as scrolling or swiping.
+    */
+    if (
+      horizontalMovement > maximumTapMovement ||
+      verticalMovement > maximumTapMovement
+    ) {
+      phoneTouchMoved = true;
+    }
+  },
+  {
+    passive: true
+  }
+);
+
+/*
+  Checks whether two genuine taps happened
+  close together without scrolling.
+*/
+document.addEventListener(
+  "touchend",
+  function (event) {
+
+    /*
+      Prevents the hidden input from opening when
+      tapping links, buttons, videos or the carousel.
+    */
+    if (isInteractiveElement(event.target)) {
+      previousTapTime = 0;
+      return;
+    }
+
+    const touchLocation = event.changedTouches[0];
+
+    if (!touchLocation) {
+      previousTapTime = 0;
+      return;
+    }
+
+    const currentTime = Date.now();
+
+    // Calculates how long the finger was on the screen
+    const tapDuration =
+      currentTime - phoneTouchStartTime;
+
+    // Calculates the final movement of the finger
+    const horizontalMovement = Math.abs(
+      touchLocation.clientX - phoneTouchStartX
+    );
+
+    const verticalMovement = Math.abs(
+      touchLocation.clientY - phoneTouchStartY
+    );
+
+    /*
+      Ignores the gesture if the user scrolled,
+      swiped or held their finger down too long.
+    */
+    const wasScrolling =
+      phoneTouchMoved ||
+      horizontalMovement > maximumTapMovement ||
+      verticalMovement > maximumTapMovement;
+
+    const wasLongPress =
+      tapDuration > maximumTapDuration;
+
+    if (wasScrolling || wasLongPress) {
+      previousTapTime = 0;
+      return;
+    }
+
+    // Calculates the time between both taps
+    const timeBetweenTaps =
+      currentTime - previousTapTime;
+
+    // Calculates the distance between both taps
+    const horizontalTapDistance =
+      touchLocation.clientX - previousTapX;
+
+    const verticalTapDistance =
+      touchLocation.clientY - previousTapY;
+
+    const distanceBetweenTaps = Math.sqrt(
+      horizontalTapDistance * horizontalTapDistance +
+      verticalTapDistance * verticalTapDistance
+    );
+
+    /*
+      The hidden input opens only when:
+
+      1. This is the second tap.
+      2. Both taps happened within 450 milliseconds.
+      3. Both taps happened close to the same location.
+    */
+    const isDoubleTap =
+      previousTapTime !== 0 &&
+      timeBetweenTaps <= maximumDoubleTapDelay &&
+      distanceBetweenTaps <= maximumDistanceBetweenTaps;
+
+    if (isDoubleTap) {
+      showSecretInput(
+        touchLocation.clientX,
+        touchLocation.clientY
+      );
+
+      /*
+        Resets the tap information so a third tap
+        does not immediately open another input.
+      */
+      previousTapTime = 0;
+      return;
+    }
+
+    /*
+      This was the first tap, so its information
+      is saved while waiting for the second tap.
+    */
+    previousTapTime = currentTime;
+    previousTapX = touchLocation.clientX;
+    previousTapY = touchLocation.clientY;
   },
   {
     passive: true
