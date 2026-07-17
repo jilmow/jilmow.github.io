@@ -1,8 +1,4 @@
-// ==============================================
-// MOBILE NAVIGATION MENU
-// USED ON EVERY PAGE
-// ==============================================
-
+// Mobule nav menu
 function toggleMenu() {
   const navLinks = document.getElementById("navLinks");
 
@@ -11,21 +7,10 @@ function toggleMenu() {
   }
 }
 
-
-// ==============================================
-// HIDDEN WIMJEFF EASTER EGG
-// USED ON EVERY PAGE
-// ==============================================
-
-// Secret word that starts the animation
+// Easter Egg
 const secretWord = "wimjeff";
 
-/*
-  Checks whether the selected element is interactive.
-
-  Double-clicking or double-tapping these elements
-  will not open the hidden text field.
-*/
+// Double click feature
 function isInteractiveElement(element) {
   return element.closest(
     "a, button, input, textarea, select, label, video, " +
@@ -33,10 +18,7 @@ function isInteractiveElement(element) {
   );
 }
 
-/*
-  Creates the text field at the location where
-  the user double-clicked or double-tapped.
-*/
+// The text field
 function showSecretInput(xPosition, yPosition) {
   const oldInput = document.querySelector(".secret-word-input");
 
@@ -52,9 +34,6 @@ function showSecretInput(xPosition, yPosition) {
   secretInput.autocomplete = "off";
   secretInput.setAttribute("aria-label", "Hidden text field");
 
-  /*
-    Keeps the input field inside the visible screen.
-  */
   const inputHalfWidth = 125;
   const inputHalfHeight = 25;
 
@@ -74,9 +53,7 @@ function showSecretInput(xPosition, yPosition) {
   document.body.appendChild(secretInput);
   secretInput.focus();
 
-  /*
-    Waits for Enter before checking the entered word.
-  */
+  // Pressing Enter
   secretInput.addEventListener("keydown", function (event) {
     if (event.key === "Escape") {
       secretInput.remove();
@@ -89,18 +66,12 @@ function showSecretInput(xPosition, yPosition) {
 
     event.preventDefault();
 
-    /*
-      Makes the check case-insensitive and removes spaces.
-    */
+    //Makes the check case-insensitive and removes spaces.
     const typedText = secretInput.value
       .trim()
       .toLowerCase()
       .replace(/\s/g, "");
 
-    /*
-      Accepts the complete word or at least two
-      consecutive letters from WimJeff.
-    */
     const isPartOfSecretWord =
       typedText.length >= 2 &&
       secretWord.includes(typedText);
@@ -119,9 +90,7 @@ function showSecretInput(xPosition, yPosition) {
     }
   });
 
-  /*
-    Removes the input if the user clicks elsewhere.
-  */
+  //Removes the input if the user clicks elsewhere.
   secretInput.addEventListener("blur", function () {
     setTimeout(function () {
       if (secretInput.isConnected) {
@@ -131,9 +100,7 @@ function showSecretInput(xPosition, yPosition) {
   });
 }
 
-/*
-  Creates the bouncing WimJeff text.
-*/
+// Bouncing WimJeff
 function startWimJeffAnimation() {
   const oldAnimation = document.querySelector(".wimjeff-bouncer");
 
@@ -154,24 +121,14 @@ function startWimJeffAnimation() {
 
   document.body.appendChild(bouncingText);
 
-  /*
-    WimJeff disappears only when it is clicked directly.
-  */
+  //WimJeff disappears after click
   bouncingText.addEventListener("click", function (event) {
     event.stopPropagation();
     bouncingText.remove();
   });
 }
 
-
-// ==============================================
-// COMPUTER DOUBLE-CLICK
-// ==============================================
-
-/*
-  Prevents touchscreen taps from also activating
-  the browser's computer double-click event.
-*/
+// Double click feature
 let lastTouchInteractionTime = 0;
 
 document.addEventListener("dblclick", function (event) {
@@ -190,14 +147,7 @@ document.addEventListener("dblclick", function (event) {
 });
 
 
-// ==============================================
-// PHONE AND TABLET DOUBLE-TAP
-// ==============================================
-
-/*
-  Information about the finger currently touching
-  the screen.
-*/
+// Phone double-tap feature
 let activeTouchPointerId = null;
 let touchStartX = 0;
 let touchStartY = 0;
@@ -206,26 +156,15 @@ let touchStartScrollY = 0;
 let touchStartTime = 0;
 let touchMoved = false;
 let pageScrolledDuringTouch = false;
-
-/*
-  Information about the previous valid tap.
-*/
 let previousValidTapTime = 0;
 let previousValidTapX = 0;
 let previousValidTapY = 0;
 let previousValidTapTarget = null;
-
-/*
-  Strict limits that distinguish tapping from scrolling.
-*/
 const maximumFingerMovement = 8;
 const maximumTapLength = 280;
 const maximumTimeBetweenTaps = 400;
 const maximumDistanceBetweenTaps = 12;
 
-/*
-  Clears the saved first tap.
-*/
 function resetPreviousValidTap() {
   previousValidTapTime = 0;
   previousValidTapX = 0;
@@ -233,9 +172,7 @@ function resetPreviousValidTap() {
   previousValidTapTarget = null;
 }
 
-/*
-  Any scrolling cancels the tap.
-*/
+// Tab cancel
 window.addEventListener(
   "scroll",
   function () {
@@ -248,9 +185,7 @@ window.addEventListener(
   }
 );
 
-/*
-  Records where a finger first touches the screen.
-*/
+// Touch phone
 document.addEventListener(
   "pointerdown",
   function (event) {
@@ -280,9 +215,7 @@ document.addEventListener(
   }
 );
 
-/*
-  Detects finger movement.
-*/
+//Detects finger movement.
 document.addEventListener(
   "pointermove",
   function (event) {
@@ -314,9 +247,7 @@ document.addEventListener(
   }
 );
 
-/*
-  Cancels an interrupted touch.
-*/
+// Touch cancel
 document.addEventListener(
   "pointercancel",
   function (event) {
@@ -336,10 +267,7 @@ document.addEventListener(
   }
 );
 
-/*
-  Checks whether two completed taps happened
-  on the same element and almost the same spot.
-*/
+// Double touch check
 document.addEventListener(
   "pointerup",
   function (event) {
@@ -374,10 +302,7 @@ document.addEventListener(
       window.scrollX !== touchStartScrollX ||
       window.scrollY !== touchStartScrollY;
 
-    /*
-      Rejects the gesture if the user moved,
-      scrolled, swiped or held the screen.
-    */
+    // Text cancel
     const isInvalidTap =
       touchMoved ||
       pageScrolledDuringTouch ||
@@ -411,9 +336,7 @@ document.addEventListener(
       verticalTapDistance * verticalTapDistance
     );
 
-    /*
-      Both taps must land on the same HTML element.
-    */
+    // Touch precision
     const tappedSameElement =
       currentTapTarget === previousValidTapTarget;
 
@@ -435,10 +358,7 @@ document.addEventListener(
       return;
     }
 
-    /*
-      Saves the first valid tap while waiting for
-      a second tap.
-    */
+    // First tap
     previousValidTapTime = currentTapTime;
     previousValidTapX = event.clientX;
     previousValidTapY = event.clientY;
@@ -449,19 +369,9 @@ document.addEventListener(
   }
 );
 
-
-// ==============================================
-// SCROLL FADE-IN ANIMATION
-// USED ON EVERY PAGE
-// ==============================================
-
+// Fade in animation
 document.addEventListener("DOMContentLoaded", function () {
-  /*
-    Selects sections below the visible top portion.
 
-    The Home hero and page-title banners remain visible
-    when the page first opens.
-  */
   const sectionsToReveal = document.querySelectorAll(
     "#home-content > section, main > section.section, footer"
   );
@@ -490,9 +400,7 @@ document.addEventListener("DOMContentLoaded", function () {
       revealObserver.observe(section);
     });
   } else {
-    /*
-      Older-browser fallback.
-    */
+
     sectionsToReveal.forEach(function (section) {
       section.classList.add("reveal-visible");
     });

@@ -1,15 +1,11 @@
-/* ============================================== */
-/* CONTACT.HTML - CONTACT DETAILS                 */
-/* ============================================== */
-
-/* Centers the Contact Details card */
+/* The placing of the card */
 .contact-section {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-/* Contact Details card */
+/* Card design */
 .contact-info {
   width: 100%;
   max-width: 600px;
@@ -34,10 +30,7 @@
   text-decoration: underline;
 }
 
-/* ============================================== */
-/* CONTACT.HTML - PHONE DESIGN                    */
-/* ============================================== */
-
+/* For the Phone */
 @media screen and (max-width: 650px) {
   .contact-info {
     max-width: 100%;

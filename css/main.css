@@ -1,20 +1,16 @@
-/* ============================================== */
-/* GENERAL STYLES USED BY EVERY HTML PAGE         */
-/* ============================================== */
-
-/* Removes the default spacing added by the browser */
+/* Removes spacing added by the browser */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Makes links to sections scroll smoothly */
+/* Smooth links */
 html {
   scroll-behavior: smooth;
 }
 
-/* General design of the website */
+/* General design */
 body {
   min-height: 100vh;
   display: flex;
@@ -26,20 +22,17 @@ body {
   overflow-x: hidden;
 }
 
-/* Keeps the footer at the bottom of short pages */
+/* Footer */
 main {
   flex: 1;
 }
 
-/* Makes all images responsive */
+/* All images responsive */
 img {
   max-width: 100%;
 }
 
-/* ============================================== */
-/* HEADER AND NAVIGATION FOR EVERY HTML PAGE      */
-/* ============================================== */
-
+/* Header and Nav for every page */
 header {
   position: relative;
   z-index: 1000;
@@ -48,7 +41,7 @@ header {
   box-shadow: 0 4px 18px rgba(43, 20, 10, 0.2);
 }
 
-/* Centers the navigation */
+/* Centers nav */
 .navbar {
   width: 90%;
   max-width: 1180px;
@@ -60,7 +53,7 @@ header {
   gap: 25px;
 }
 
-/* Portfolio logo */
+/* Logo */
 .logo {
   color: white;
   font-size: 25px;
@@ -72,7 +65,7 @@ header {
   color: #ffedd5;
 }
 
-/* Navigation list */
+/* Nav list */
 .navbar ul {
   list-style: none;
   display: flex;
@@ -81,7 +74,7 @@ header {
   margin-left: auto;
 }
 
-/* Navigation links */
+/* Nav links */
 .navbar a {
   position: relative;
   padding: 9px 0;
@@ -92,7 +85,6 @@ header {
   transition: color 0.3s ease;
 }
 
-/* Line underneath navigation links */
 .navbar a::after {
   content: "";
   position: absolute;
@@ -125,10 +117,7 @@ header {
   cursor: pointer;
 }
 
-/* ============================================== */
-/* BUTTONS USED THROUGHOUT THE WEBSITE            */
-/* ============================================== */
-
+/* The Buttons */
 .btn {
   display: inline-block;
   padding: 13px 24px;
@@ -151,10 +140,7 @@ header {
   box-shadow: 0 10px 24px rgba(194, 65, 12, 0.32);
 }
 
-/* ============================================== */
-/* SHARED CONTENT SECTIONS                        */
-/* ============================================== */
-
+/* For every page */
 .section {
   width: 90%;
   max-width: 1100px;
@@ -189,7 +175,7 @@ header {
   margin-top: 16px;
 }
 
-/* Shared white card */
+/* Default card */
 .card {
   margin-bottom: 10px;
   padding: 24px;
@@ -217,7 +203,7 @@ header {
   margin-bottom: 10px;
 }
 
-/* Shared orange text link */
+/* Shared link color */
 .small-link {
   color: #c2410c;
   font-weight: bold;
@@ -230,10 +216,7 @@ header {
   text-decoration: underline;
 }
 
-/* ============================================== */
-/* PAGE TITLE ON ABOUT, WORK AND CONTACT          */
-/* ============================================== */
-
+/* PAGE titles */
 .page-title {
   padding: 65px 20px;
   background:
@@ -257,10 +240,7 @@ header {
   color: #ffedd5;
 }
 
-/* ============================================== */
-/* SHARED SKILL LABELS                            */
-/* ============================================== */
-
+/* Skill labels */
 .skills {
   display: flex;
   flex-wrap: wrap;
@@ -277,10 +257,7 @@ header {
   box-shadow: 0 3px 10px rgba(124, 45, 18, 0.08);
 }
 
-/* ============================================== */
-/* SHARED CARD GRID                               */
-/* ============================================== */
-
+/* Default card grid */
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -288,10 +265,7 @@ header {
   gap: 25px;
 }
 
-/* ============================================== */
-/* FOOTER USED BY EVERY HTML PAGE                 */
-/* ============================================== */
-
+/* Footer */
 footer {
   padding: 20px;
   background: linear-gradient(90deg, #541c08, #9a3412, #c2410c);
@@ -299,10 +273,7 @@ footer {
   text-align: center;
 }
 
-/* ============================================== */
-/* SHARED ANIMATIONS                              */
-/* ============================================== */
-
+/* Animations */
 @keyframes moveUp {
   from {
     opacity: 0;
@@ -336,10 +307,7 @@ footer {
   }
 }
 
-/* ============================================== */
-/* SHARED TABLET DESIGN                           */
-/* ============================================== */
-
+/* Tablet design */
 @media screen and (max-width: 900px) {
   .navbar {
     width: 92%;
@@ -354,10 +322,7 @@ footer {
   }
 }
 
-/* ============================================== */
-/* SHARED PHONE DESIGN                            */
-/* ============================================== */
-
+/* Phone design */
 @media screen and (max-width: 650px) {
   .navbar {
     width: 90%;
@@ -418,10 +383,7 @@ footer {
   }
 }
 
-/* ============================================== */
-/* HIDDEN WIMJEFF EASTER EGG                      */
-/* ============================================== */
-
+/* Easter Egg */
 .secret-word-input {
   position: fixed;
   z-index: 10000;
@@ -589,10 +551,7 @@ footer {
   }
 }
 
-/* ============================================== */
-/* SCROLL FADE-IN ANIMATION                       */
-/* ============================================== */
-
+/* Fade-in animation */
 .scroll-reveal {
   opacity: 0;
   visibility: hidden;
@@ -610,7 +569,7 @@ footer {
   transform: translateY(0);
 }
 
-/* Disables movement when a user prefers less animation */
+/* Disables movement */
 @media (prefers-reduced-motion: reduce) {
   .scroll-reveal {
     opacity: 1;

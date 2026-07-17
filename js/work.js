@@ -1,14 +1,6 @@
-// ==============================================
-// PROJECT MEDIA CAROUSEL
-// USED ONLY ON WORK.HTML
-// ==============================================
-
 document.addEventListener("DOMContentLoaded", function () {
   const carousel = document.getElementById("projectCarousel");
 
-  /*
-    Stops if this page does not contain a carousel.
-  */
   if (!carousel) {
     return;
   }
@@ -34,9 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let currentSlide = 0;
   let touchStartX = 0;
 
-  /*
-    Displays the selected slide.
-  */
+  // Show what is selected
   function showSlide(slideNumber) {
     if (slideNumber >= carouselSlides.length) {
       currentSlide = 0;
@@ -49,9 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
     carouselTrack.style.transform =
       "translateX(-" + currentSlide * 100 + "%)";
 
-    /*
-      Updates the active navigation dot.
-    */
+    // Nav dots
     carouselDots.forEach(function (dot, index) {
       dot.classList.toggle(
         "active",
@@ -59,9 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
       );
     });
 
-    /*
-      Pauses videos when their slide is no longer visible.
-    */
+    // Video feature
     carouselSlides.forEach(function (slide, index) {
       const video = slide.querySelector("video");
 
@@ -71,9 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  /*
-    Previous and next buttons.
-  */
+  //next and previous buttons
   previousButton.addEventListener("click", function () {
     showSlide(currentSlide - 1);
   });
@@ -82,18 +66,14 @@ document.addEventListener("DOMContentLoaded", function () {
     showSlide(currentSlide + 1);
   });
 
-  /*
-    Navigation dots.
-  */
+  // Nav dots
   carouselDots.forEach(function (dot, index) {
     dot.addEventListener("click", function () {
       showSlide(index);
     });
   });
 
-  /*
-    Saves where a phone swipe started.
-  */
+ // Phone swipe feature
   carouselViewport.addEventListener(
     "touchstart",
     function (event) {
@@ -104,9 +84,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   );
 
-  /*
-    Detects the completed swipe direction.
-  */
   carouselViewport.addEventListener(
     "touchend",
     function (event) {
@@ -116,9 +93,6 @@ document.addEventListener("DOMContentLoaded", function () {
       const swipeDistance =
         touchStartX - touchEndX;
 
-      /*
-        Ignores very small finger movements.
-      */
       if (Math.abs(swipeDistance) < 45) {
         return;
       }
@@ -134,9 +108,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   );
 
-  /*
-    Keyboard arrow controls.
-  */
+  // Keyboard nav
   carousel.addEventListener("keydown", function (event) {
     if (event.key === "ArrowLeft") {
       event.preventDefault();
@@ -149,8 +121,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  /*
-    Starts the carousel on its first slide.
-  */
+// Start on the first slide
   showSlide(0);
 });
