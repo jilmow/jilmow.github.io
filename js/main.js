@@ -1,10 +1,12 @@
-// Mobule nav menu
-function toggleMenu() {
-  const navLinks = document.getElementById("navLinks");
+// Mobile navigation menu
+const menuButton = document.querySelector(".menu-btn");
+const navLinks = document.getElementById("navLinks");
 
-  if (navLinks) {
+// Opens and closes the navigation menu on smaller screens
+if (menuButton && navLinks) {
+  menuButton.addEventListener("click", function () {
     navLinks.classList.toggle("show");
-  }
+  });
 }
 
 // Easter Egg
